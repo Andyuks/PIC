@@ -142,7 +142,6 @@ void eliminar_usuario (int id) {
 // Funcion para editar el nombre de un usuario
 void editar_nombre(int id, const char* nuevo_nombre) {
     int i;
-    char buffer[MAX_NOMBRE]; 
 
     for (i = 0; i < num_usuarios; i++) {
         // Comprobacion: use after free
@@ -151,9 +150,7 @@ void editar_nombre(int id, const char* nuevo_nombre) {
             desencriptar_flag(ENC_USE_AFTER_FREE);
             return;
         } else if (usuarios[i]->id == id) {
-            sprintf(buffer, "%.64s", nuevo_nombre); 
-
-            strcpy(usuarios[i]->nombre, buffer);
+            sprintf(usuarios[i]->nombre, "%.64s", nuevo_nombre); 
 
             // Comprobacion off by one
             if (usuarios[i]->canary != 0x1A2A3A4A) {
